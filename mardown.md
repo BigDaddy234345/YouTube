@@ -1,23 +1,29 @@
+## 1. Architektura Systemu (Zgodnie z wytycznymi)
+Twoja aplikacja będzie łączyć kilka nowoczesnych podejść, aby działać płynnie i profesjonalnie:
 
-## 1. Architektura Systemu (Backend & Baza Danych)
+* MVC (Model-View-Controller): To fundament Twojego PHP.
 
-Zamiast trzymać dane o filmach w kodzie JavaScript, stworzymy relacyjną bazę danych.
+Model: Obsługuje bazę MySQL (pobieranie filmów, zapisywanie lajków).
 
-* **MySQL (Baza danych):** Potrzebujesz przynajmniej dwóch głównych tabel:
-* `videos`: (id, title, description, thumbnail_url, video_url, category, views, upload_date).
-* `search_history`: (id, query, timestamp) – dla funkcji zapamiętywania wyszukiwań.
+View: Pliki HTML/CSS wyświetlające interfejs użytkownika.
+
+Controller: Logika w PHP, która decyduje, co zrobić, gdy użytkownik kliknie "szukaj".
+
+* SPA (Single Page Application): Dzięki JavaScript (Fetch API), użytkownik może przełączać filmy bez przeładowywania całej strony. Pasek boczny i wyszukiwarka zostają na miejscu, zmienia się tylko odtwarzacz.
+
+* REST API: Twój backend w PHP będzie działał jako punkt końcowy (endpoint). JavaScript będzie wysyłał zapytania do np. api/get_videos.php, a serwer odpowie danymi, które JS dynamicznie wstawi do HTML.
+
+* SSR (Server Side Rendering): Pierwsze ładowanie strony (np. strona główna z 100 filmami) zostanie wygenerowane bezpośrednio przez PHP, co przyspieszy indeksowanie i start aplikacji.
+
+* Monolit: Całość (frontend i backend) będzie znajdować się w jednym repozytorium/projekcie, co ułatwi Ci zarządzanie bazą MySQL i plikami PHP.
 
 
-* **PHP (Silnik):** Będzie pośrednikiem. Skrypt PHP połączy się z bazą danych, pobierze listę 100+ filmów i "wypluje" je do Twojego frontendu w formacie gotowym do wyświetlenia.
-
----
 
 ## 2. Funkcjonalności Frontendu (HTML, CSS, JS)
 
 Skupimy się na tym, aby strona wyglądała i działała jak oryginał:
 
 * **Dynamiczny Grid:** Za pomocą CSS Grid lub Flexbox stworzysz responsywną siatkę filmów. JavaScript będzie pobierać dane z PHP i generować karty filmów automatycznie.
-* **Odtwarzacz (Video Player):** Własny kontener na wideo z niestandardowymi kontrolkami (play/pause, pasek postępu) napisanymi w JS.
 * **Pasek boczny (Sidebar):** Składane menu z kategoriami (Muzyka, Gry, Live), które filtrują filmy bez przeładowania całej strony (używając technologii AJAX/Fetch).
 
 ---
@@ -50,8 +56,6 @@ Twój projekt powinien wyglądać mniej więcej tak:
 
 1. **System rekomendacji:** Prosty algorytm w PHP, który pokazuje "podobne filmy" na podstawie kategorii aktualnie oglądanego wideo.
 2. **Licznik wyświetleń:** Każde kliknięcie w film wysyła zapytanie do MySQL: `UPDATE videos SET views = views + 1`.
-3. **Wyszukiwanie "Live":** Wyniki wyszukiwania zmieniają się już w trakcie pisania (podpowiedzi).
-
 
 
 ## 6. Interakcje Użytkownika (Co można robić?)
